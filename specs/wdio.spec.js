@@ -144,3 +144,86 @@ describe('Change data:', function () {
     await browser.reloadSession();
   });
 });
+
+// change clinic and specialisation
+describe('Change data:', function () {
+
+  it('should be able to change info in profile', async function () {
+
+    await browser.setWindowSize(1440, 960);
+    await browser.url('/sign-in');
+
+    const emailField = await $('input[name="email"]');
+    const passwordField = await $('input[name="password"]');
+    const signInButton = await $('button');
+    const saveBt = await $('styles_btn___s1BB styles_without-border__3Vbp3 styles_primary-dark__1WnyR')
+    const specialisationDdl = await $('div.selectStyles__single-value css-1uccc91-singleValue=UCSF Medical Center');
+    const pediatricianOption = await $('div.selectStyles__input=pediatrician');
+
+
+    await emailField.waitForDisplayed({ timeout: 5000 });
+    await emailField.setValue(`john_admin1@admin.com`);
+  
+    await passwordField.waitForDisplayed({ timeout: 5000 });
+    await passwordField.setValue('Pa55word');
+   
+    await signInButton.waitForDisplayed({ timeout: 5000 });
+    await signInButton.click();
+
+    await browser.waitUntil(
+      async function () {
+        const url = await browser.getUrl();
+        return url === 'http://46.101.234.121/doctors';
+      },
+      { timeout: 5000 },
+    );
+
+    it('should click menu profile', () => {
+      const link = $$('#My Profile')
+      link.click()
+      },
+      { timeout: 5000 },
+      );
+
+    await browser.waitUntil(
+      async function () {
+        const url = await browser.getUrl();
+        return url === 'http://46.101.234.121/user-profile/aa5058a3-3e09-4db4-b8fb-2232cc612265';
+      },
+      { timeout: 5000 },
+    );
+    
+    it('should click edit profile', () => {
+      const editProfile = $$('Profile')
+      editProfile.click()
+      },
+      { timeout: 5000 },
+      );
+  
+    await pediatricianOption.waitForDisplayed({ timeout: 5000 });
+    await pediatricianOption.click();
+
+    await saveBt.waitForDisplayed({ timeout: 5000 });
+    await saveBt.click();
+
+    await specialisationDdl.waitForDisplayed({ timeout: 5000 });
+    await specialisationDdl.click();
+
+    await saveBt.waitForDisplayed({ timeout: 5000 });
+    await saveBt.click();
+
+    await browser.waitUntil(
+      async function () {
+        const url = await browser.getUrl();
+        return url === 'http://46.101.234.121/user-profile/aa5058a3-3e09-4db4-b8fb-2232cc612265';
+      },
+      { timeout: 5000 },
+    );
+
+    const url = await browser.getUrl();
+    expect(url).to.be.eql('http://46.101.234.121/user-profile/aa5058a3-3e09-4db4-b8fb-2232cc612265');
+    
+    await browser.reloadSession();
+  });
+});
+
