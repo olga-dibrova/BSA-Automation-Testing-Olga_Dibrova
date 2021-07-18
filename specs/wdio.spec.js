@@ -227,3 +227,74 @@ describe('Change data:', function () {
   });
 });
 
+// new clinic
+describe('Add clinic:', function () {
+
+  it('should be able to add new clinic', async function () {
+
+    await browser.setWindowSize(1440, 960);
+    await browser.url('/sign-in');
+
+    const emailField = await $('input[name="email"]');
+    const passwordField = await $('input[name="password"]');
+    const signInButton = await $('button');
+    const addBtn = await $$('Add')
+    const submitBtn = await $$('Add')
+    const clinicCont= $('styles_cardContainer__qjzSj')
+
+
+    const clinicnameField = await $('input[name="name"]');
+    const addressField = await $('input[name="surname"]');
+   
+    const statusDdl = ddls[0];
+    const cityDdl = ddls[1];
+
+    const stateOption = await $('div.selectStyles__option=state');
+    const cityOption = await $('div.selectStyles__option=New York, NY');
+
+    await emailField.waitForDisplayed({ timeout: 5000 });
+    await emailField.setValue(`john_admin1@admin.com`);
+  
+    await passwordField.waitForDisplayed({ timeout: 5000 });
+    await passwordField.setValue('Pa55word');
+   
+    await signInButton.waitForDisplayed({ timeout: 5000 });
+    await signInButton.click();
+
+    await browser.waitUntil(
+      async function () {
+        const url = await browser.getUrl();
+        return url === 'http://46.101.234.121/clinics';
+      },
+      { timeout: 5000 },
+    );
+
+    await addBtn.waitForDisplayed({ timeout: 5000 });
+    await addBtn.click();
+
+    await clinicnameField.waitForDisplayed({ timeout: 5000 });
+    await clinicnameField.setValue('Universal Dental');
+
+    await addressField.waitForDisplayed({ timeout: 5000 });
+    await addressField.setValue('3th Street. 47 W 13th St');
+
+    await statusDdl.waitForDisplayed({ timeout: 5000 });
+    await statusDdl.click();
+
+    await stateOption.waitForDisplayed({ timeout: 5000 });
+    await stateOption.click();
+
+    await cityDdl.waitForDisplayed({ timeout: 5000 });
+    await cityDdl.click();
+
+    await cityOption.waitForDisplayed({ timeout: 5000 });
+    await cityOption.click();
+
+    await submitBtn.waitForDisplayed({ timeout: 5000 });
+    await submitBtn.click();
+
+    expect(clinicCont.styles_title__3xRcc).to.be.eql('Universal Dental');
+    
+    await browser.reloadSession();
+  });
+});
