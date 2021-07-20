@@ -29,31 +29,7 @@ describe('Registration:', function () {
     await browser.waitUntil(
       async function () {
         const url = await browser.getUrl();
-        return url === 'http://46.101.234.121/doctors';
-      },
-      { timeout: 5000 },
-    );
-
-    const url = await browser.getUrl();
-    expect(url).to.be.eql('http://46.101.234.121/doctors');
-  });
-
-  it('should be able to register patient', async function () {
-    await app.authPage.register({
-      name: `John${rundomNumber()}`,
-      surname: 'Patient',
-      email: `marcus${rundomNumber()}@gmail.com`,
-      password: 'Pa55word',
-      phone: '380999999',
-      birthDate: '11/11/2000',
-      status: 'patient',
-      gender: 'male',
-    });
-
-    await browser.waitUntil(
-      async function () {
-        const url = await browser.getUrl();
-        return url === 'http://46.101.234.121/doctors';
+        return url === 'http://46.101.234.121/user-profile/aa5058a3-3e09-4db4-b8fb-2232cc612265';
       },
       { timeout: 5000 },
     );
