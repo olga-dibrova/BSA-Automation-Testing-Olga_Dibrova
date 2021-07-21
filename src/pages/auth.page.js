@@ -34,6 +34,16 @@ class AuthPage {
 
     await this.submitButton.click();
   }
+  
+    async login({email, password}) {
+ 
+    await this.emailField.setValue(email);
+    await this.passwordField.setValue(password);
+    await this.signInButton.click();
+
+  }
+
 }
+
 
 module.exports = { AuthPage };
